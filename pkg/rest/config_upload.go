@@ -455,6 +455,10 @@ func addQueryParamsForNonStandardApis(theApi api.Api, url *url.URL) *url.URL {
 	if theApi.GetId() == "slo" {
 		queryParams.Add("enabledSlos", "all")
 	}
+	if theApi.GetId() == "anomaly-detection-settings-host" {
+		queryParams.Add("schemaIds", "builtin:anomaly-detection.infrastructure-hosts")
+		queryParams.Add("fields", "objectId,schemaId,scope")
+	}
 	url.RawQuery = queryParams.Encode()
 	return url
 }
@@ -556,6 +560,11 @@ func translateGenericValues(inputValues []interface{}, configType string) ([]api
 
 	for i := 0; i < numValues; i++ {
 		input := inputValues[i].(map[string]interface{})
+
+		if input["objectId"] != nil {
+			input["id"] = input["objectId"]
+			input["name"] = input["scope"]
+		}
 
 		if input["id"] == nil {
 			return values, fmt.Errorf("config of type %s was invalid: No id", configType)

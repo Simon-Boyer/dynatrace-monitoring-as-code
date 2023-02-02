@@ -245,6 +245,11 @@ var apiMap = map[string]apiInput{
 		apiPath:                  "/api/config/v1/anomalyDetection/hosts",
 		isSingleConfigurationApi: true,
 	},
+	"anomaly-detection-settings-host": {
+		apiPath:                      "/api/v2/settings/objects",
+		isSingleConfigurationApi:     false,
+		propertyNameOfGetAllResponse: "items",
+	},
 	"anomaly-detection-services": {
 		apiPath:                  "/api/config/v1/anomalyDetection/services",
 		isSingleConfigurationApi: true,
